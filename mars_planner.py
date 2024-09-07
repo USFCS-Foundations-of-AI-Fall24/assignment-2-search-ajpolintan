@@ -133,12 +133,10 @@ def mission_complete(state) :
     return r2.charged == True and r2.holding_sample == True and r2.sample_extracted == True
     
 if __name__=="__main__" :
-    s = RoverState(loc="battery")
-    move_to_sample(s)
-    print(s)
-    print("hello")
-    
-    result = breadth_first_search(s, action_list, mission_complete)
+    def g(s):
+        return s.loc == "battery"
+    s = RoverState(loc="station")
+    result = breadth_first_search(s, action_list, g)
     print(result)
 
 

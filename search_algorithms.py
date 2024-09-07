@@ -6,9 +6,12 @@ from collections import deque
 def breadth_first_search(startState, action_list, goal_test, use_closed_list=True) :
     search_queue = deque()
     closed_list = {}
-    print("SEARRCH")
+    states = 0
 
+    print(search_queue)
     search_queue.append((startState,""))
+    print(search_queue)
+
     if use_closed_list :
         closed_list[startState] = True
     while len(search_queue) > 0 :
@@ -21,16 +24,19 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
+                
+            print("STATES" + str(states))
             return next_state
         else :
             successors = next_state[0].successors(action_list)
+            states = states + 1
             if use_closed_list :
                 successors = [item for item in successors
                                     if item[0] not in closed_list]
                 for s in successors :
                     closed_list[s[0]] = True
             search_queue.extend(successors)
-
+    print("STATES" + str(states))
 ### Note the similarity to BFS - the only difference is the search queue
 
 ## use the limit parameter to implement depth-limited search
