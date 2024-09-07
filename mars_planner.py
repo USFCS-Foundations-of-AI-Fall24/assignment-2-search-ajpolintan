@@ -26,7 +26,10 @@ class RoverState :
 
     ## you do this.
     def __eq__(self, other):
-       pass
+       return (self.loc == other.loc and 
+              self.sample_extracted == other.sample_extracted
+              and self.holding_sample == other.holding_sample
+              and self.charged == other.charged)
 
 
     def __repr__(self):
@@ -95,16 +98,26 @@ def charge(state) :
 action_list = [charge, drop_sample, pick_up_sample,
                move_to_sample, move_to_battery, move_to_station]
 
+## goal functions
 def battery_goal(state) :
     return state.loc == "battery"
+def sample_goal(state) :
+    return state.loc == "sample"
+def station_goal(state) :
+    return state.loc == "station"
+
 ## add your goals here.
 
 def mission_complete(state) :
-    pass
-
-
+    r2 = deepcopy(state) 
+    return r2.charged == True and r2.holding_sample == True and r2.sample_extracted == True
+    
 if __name__=="__main__" :
-    s = RoverState()
+    s = RoverState(loc="battery")
+    move_to_sample(s)
+    print(s)
+    print("hello")
+    
     result = breadth_first_search(s, action_list, mission_complete)
     print(result)
 
