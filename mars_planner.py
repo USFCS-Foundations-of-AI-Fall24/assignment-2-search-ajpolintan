@@ -17,10 +17,11 @@ from copy import deepcopy
 from search_algorithms import breadth_first_search
 
 class RoverState :
-    def __init__(self, loc="station", sample_extracted=False, holding_sample=False, charged=False):
+    def __init__(self, loc="station", sample_extracted=False, holding_sample=False, holding_tool=False, charged=False):
         self.loc = loc
         self.sample_extracted=sample_extracted
         self.holding_sample = holding_sample
+        self.holding_tool = holding_tool
         self.charged=charged
         self.prev = None
 
@@ -29,6 +30,7 @@ class RoverState :
        return (self.loc == other.loc and 
               self.sample_extracted == other.sample_extracted
               and self.holding_sample == other.holding_sample
+              and self.holding_tool == other.holding_tool
               and self.charged == other.charged)
 
 
@@ -36,6 +38,7 @@ class RoverState :
         return (f"Location: {self.loc}\n" +
                 f"Sample Extracted?: {self.sample_extracted}\n"+
                 f"Holding Sample?: {self.holding_sample}\n" +
+                f"Holding Tool? :{self.holding_tool}\n" +
                 f"Charged? {self.charged}")
 
     def __hash__(self):
