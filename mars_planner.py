@@ -38,7 +38,7 @@ class RoverState :
         return (f"Location: {self.loc}\n" +
                 f"Sample Extracted?: {self.sample_extracted}\n"+
                 f"Holding Sample?: {self.holding_sample}\n" +
-                f"Holding Tool? :{self.holding_tool}\n" +
+                f"Holding Tool? : {self.holding_tool}\n" +
                 f"Charged? {self.charged}")
 
     def __hash__(self):
@@ -75,6 +75,23 @@ def move_to_battery(state) :
     return r2
 # add tool functions here
 
+def pick_up_tool(state) :
+    r2 = deepcopy(state)
+    r2.holding_tool = True
+    r2.prev = state
+    return r2
+
+def drop_tool(state) :
+    r2 = deepcopy(state)
+    r2.holding_tool = False
+    r2.prev = state
+    return r2
+
+def use_tool(state) :
+    r2 = deepcopy(state)
+    r2.sample_extracted = True
+    r2.prev = state
+    return r2
 
 def pick_up_sample(state) :
     r2 = deepcopy(state)
