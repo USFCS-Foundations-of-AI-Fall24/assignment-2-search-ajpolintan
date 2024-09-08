@@ -4,8 +4,15 @@ from ortools.sat.python import cp_model
 model = cp_model.CpModel()
 solver = cp_model.CpSolver()
 
+#GOAL: Find an assignment of frequencies to antanne that maintains the constraint that no
+#atannate share similar frequencies
+
+
 ## colors: 0: Red, 1: Blue 2: Green
+frequencies = {0: "f1", 1: "f2", 2: "f3"}
+
 colors = {0 : 'Red',1:'Blue',2:'Green'}
+
 
 SF = model.NewIntVar(0,2,'SF')
 Alameda = model.NewIntVar(0,2,'Alameda')
@@ -18,6 +25,14 @@ Napa = model.NewIntVar(0,2,'Napa')
 Sonoma = model.NewIntVar(0,2,'Sonoma')
 
 Antenna1 = model.NewIntVar(0,2, "A1")
+Antenna2 = model.NewIntVar(0,2, "A2")
+Antenna3 = model.NewIntVar(0,2, "A3")
+Antenna4 = model.NewIntVar(0,2, "A4")
+Antenna5 = model.NewIntVar(0,2, "A5")
+Antenna6 = model.NewIntVar(0,2, "A6")
+Antenna7 = model.NewIntVar(0,2, "A7")
+Antenna8 = model.NewIntVar(0,2, "A8")
+
 
 ## add edges
 model.Add(SF != Alameda)
