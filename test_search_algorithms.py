@@ -1,6 +1,8 @@
 from unittest import TestCase
 from mars_planner import *
-from romania_state import *
+import unittest
+
+##from romania_state import *
 from search_algorithms import *
 
 
@@ -38,3 +40,6 @@ class Test(TestCase):
         s3 = RoverState()
         result = depth_first_search(s3, action_list, g3)
         print(result)
+
+if __name__ == '__main__':
+    unittest.main()

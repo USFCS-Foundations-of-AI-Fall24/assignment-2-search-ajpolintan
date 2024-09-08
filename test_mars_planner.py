@@ -1,4 +1,5 @@
 from unittest import TestCase
+import unittest
 from mars_planner import *
 
 
@@ -25,3 +26,6 @@ class TestRoverState(TestCase):
         s=RoverState()
         slist = s.successors(action_list)
         print(slist)
+
+if __name__ == '__main__':
+    unittest.main()

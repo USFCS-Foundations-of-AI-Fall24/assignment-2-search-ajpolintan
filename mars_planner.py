@@ -49,7 +49,11 @@ class RoverState :
         ## apply each function in the list of actions to the current state to get
         ## a new state.
         ## add the name of the function also
+
+        ##explanation to myself. list of actions are applied. Self is the current state. Each action is applied to the state. If the state is the same the item is removed  
         succ = [(item(self), item.__name__) for item in list_of_actions]
+        print("HEYYY" + str(succ[1]))
+
         ## remove actions that have no effect
 
         succ = [item for item in succ if not item[0] == self]
@@ -78,6 +82,7 @@ def move_to_battery(state) :
 def pick_up_tool(state) :
     r2 = deepcopy(state)
     r2.holding_tool = True
+    r2.loc = "station"
     r2.prev = state
     return r2
 
@@ -126,6 +131,7 @@ def sample_goal(state) :
 def station_goal(state) :
     return state.loc == "station"
 
+
 ## add your goals here.
 
 def mission_complete(state) :
@@ -133,10 +139,18 @@ def mission_complete(state) :
     return r2.charged == True and r2.holding_sample == True and r2.sample_extracted == True
     
 if __name__=="__main__" :
+
+    s = RoverState(loc="battery")
+    s = move_to_sample(s)
+    print(s.loc)
+
     def g(s):
-        return s.loc == "battery"
-    s = RoverState(loc="station")
+        return s.loc == "sample"
+    s = RoverState()
     result = breadth_first_search(s, action_list, g)
+       
+    #result = breadth_first_search(s, action_list, battery_goal)
+
     print(result)
 
 
