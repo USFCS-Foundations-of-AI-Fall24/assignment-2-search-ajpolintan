@@ -32,9 +32,47 @@ Antenna5 = model.NewIntVar(0,2, "A5")
 Antenna6 = model.NewIntVar(0,2, "A6")
 Antenna7 = model.NewIntVar(0,2, "A7")
 Antenna8 = model.NewIntVar(0,2, "A8")
+Antenna9 = model.NewIntVar(0,2, "A9")
 
 
-## add edges
+model.Add(Antenna1 != Antenna2)
+model.Add(Antenna1 != Antenna3)
+model.Add(Antenna1 != Antenna4)
+
+model.Add(Antenna2 != Antenna1)
+model.Add(Antenna2 != Antenna3)
+model.Add(Antenna2 != Antenna5)
+model.Add(Antenna2 != Antenna6)
+
+model.Add(Antenna3 != Antenna1)
+model.Add(Antenna3 != Antenna2)
+model.Add(Antenna3 != Antenna6)
+model.Add(Antenna3 != Antenna9)
+
+model.Add(Antenna4 != Antenna1)
+model.Add(Antenna4 != Antenna2)
+model.Add(Antenna4 != Antenna5)
+
+model.Add(Antenna5 != Antenna2)
+model.Add(Antenna5 != Antenna4)
+
+model.Add(Antenna6 != Antenna2)
+model.Add(Antenna6 != Antenna7)
+model.Add(Antenna6 != Antenna8)
+
+model.Add(Antenna7 != Antenna6)
+model.Add(Antenna7 != Antenna8)
+
+model.Add(Antenna8 != Antenna7)
+model.Add(Antenna8 != Antenna9)
+
+model.Add(Antenna9 != Antenna3)
+model.Add(Antenna9 != Antenna8)
+
+
+
+## add edges. These are constraints. The edges are added so they wont intersect with each other
+
 model.Add(SF != Alameda)
 model.Add(SF != Marin)
 model.Add(SF != SanMateo)
@@ -51,6 +89,18 @@ model.Add(ContraCosta != Marin)
 status = solver.Solve(model)
 
 if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+    print("A1: %s" % frequencies[solver.Value(Antenna1)])
+    print("A2: %s" % frequencies[solver.Value(Antenna2)])
+    print("A3: %s" % frequencies[solver.Value(Antenna3)])
+    print("A4: %s" % frequencies[solver.Value(Antenna4)])
+    print("A5: %s" % frequencies[solver.Value(Antenna5)])
+    print("A6: %s" % frequencies[solver.Value(Antenna6)])
+    print("A7: %s" % frequencies[solver.Value(Antenna7)])
+    print("A8: %s" % frequencies[solver.Value(Antenna8)])
+    print("A9: %s" % frequencies[solver.Value(Antenna9)])
+
+
+
     print("SF: %s" % colors[solver.Value(SF)])
     print("Alameda: %s" % colors[solver.Value(Alameda)])
     print("Marin: %s" % colors[solver.Value(Marin)])
