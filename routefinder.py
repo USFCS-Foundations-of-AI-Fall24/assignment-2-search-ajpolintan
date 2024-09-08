@@ -46,9 +46,15 @@ def h1(state) :
 ## you do this - return the straight-line distance between the state and (1,1)
 
 #def sld(state) :
-   # sqt(a^ + b2)
+   #sqt(a^ + b2)
 
 ## you implement this. Open the file filename, read in each line,
 ## construct a Graph object and assign it to self.mars_graph().
 def read_mars_graph(filename):
-    pass
+    with open(filename) as f:   
+        for line in f.readlines() :
+            if len(line) > 0 :
+                print(line)
+
+if __name__ == '__main__':
+    read_mars_graph("readme.MD")

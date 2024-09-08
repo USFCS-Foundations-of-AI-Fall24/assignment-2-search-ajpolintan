@@ -121,7 +121,8 @@ def charge(state) :
 
 
 action_list = [charge, drop_sample, pick_up_sample,
-               move_to_sample, move_to_battery, move_to_station]
+               move_to_sample, move_to_battery, move_to_station, pick_up_tool, drop_tool,
+               use_tool]
 
 ## goal functions
 def battery_goal(state) :
@@ -135,8 +136,7 @@ def station_goal(state) :
 ## add your goals here.
 
 def mission_complete(state) :
-    r2 = deepcopy(state) 
-    return r2.charged == True and r2.holding_sample == True and r2.sample_extracted == True
+    return state.charged == True and state.loc == "Battery" and state.sample_extracted == True
     
 if __name__=="__main__" :
 
@@ -145,9 +145,9 @@ if __name__=="__main__" :
     print(s.loc)
 
     def g(s):
-        return s.loc == "sample"
+        return s.loc == "battery"
     s = RoverState()
-    result = breadth_first_search(s, action_list, g)
+    result = breadth_first_search(s, action_list, sample_goal)
        
     #result = breadth_first_search(s, action_list, battery_goal)
 
