@@ -69,8 +69,6 @@ model.Add(Antenna8 != Antenna9)
 model.Add(Antenna9 != Antenna3)
 model.Add(Antenna9 != Antenna8)
 
-
-
 ## add edges. These are constraints. The edges are added so they wont intersect with each other
 
 model.Add(SF != Alameda)

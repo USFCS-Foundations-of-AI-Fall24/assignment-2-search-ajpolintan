@@ -127,8 +127,8 @@ action_list = [charge, drop_sample, pick_up_sample,
 ## goal functions
 def battery_goal(state) :
     return state.loc == "battery"
-def sample_goal(state) :
-    return state.loc == "sample"
+def sample_goal(s) :
+            return s.loc == "sample" and s.sample_extracted == True
 def station_goal(state) :
     return state.loc == "station"
 
@@ -145,7 +145,7 @@ if __name__=="__main__" :
     print(s.loc)
 
     def g(s):
-        return s.loc == "battery"
+            return s.loc == "sample" and s.sample_extracted == True
     s = RoverState()
     result = breadth_first_search(s, action_list, sample_goal)
        
