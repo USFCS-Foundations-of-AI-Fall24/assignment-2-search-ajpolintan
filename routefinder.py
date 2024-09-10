@@ -37,13 +37,24 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     search_queue = PriorityQueue()
     closed_list = {}
     search_queue.put(start_state)
+
+    
+    while len(search_queue) > 0 :
+        next_state = search_queue.get()
+        if goal_test :
+            return next_state
+        else: 
+            edges = next_state.mars_graph.getEdges(start_state)
+            for e in edges :
+                search_queue.put(heuristic_fn(), next_state.mars_graph.getNode() )
+
+
     ## you do the rest.
 
 
 ## default heuristic - we can use this to implement uniform cost search
 def h1(state) :
-    state.location = "1,1"
-    return 
+    return 0
 
 ## you do this - return the straight-line distance between the state and (1,1)
 
@@ -57,16 +68,24 @@ def sld(state) :
 ## construct a Graph object and assign it to self.mars_graph().
 def read_mars_graph(filename):
     with open(filename) as f:   
-        files = f.readLines()
+        files = f.readlines()
         
         g = Graph(len(files))
-        
-        for line in f.readlines() :
+        for line in files :
             elements = line.strip("\n").split(" ")
-            n = Node(elements[0].rstrip[":"])
+            print(elements)
+            n = Node(elements[0].rstrip(":"))
             g.add_node(n)
-            if len(line) > 0 :
-                print(line)
+
+            for dest in elements[1:]: 
+                print("edges:")
+                src = str(n)
+                e = Edge(src, dest)
+                print(e.src)
+                
+        #return the graph
+        return g
+  
 
 if __name__ == '__main__':
     x = "1, 2"
