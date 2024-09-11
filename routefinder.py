@@ -45,8 +45,10 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
             return next_state
         else: 
             edges = next_state.mars_graph.getEdges(start_state)
+            ##queue 
             for e in edges :
-                search_queue.put(heuristic_fn(), next_state.mars_graph.getNode() )
+                ##
+                search_queue.put(next_state.g + heuristic_fn(e), next_state.mars_graph.getNode())
 
 
     ## you do the rest.
@@ -72,17 +74,22 @@ def read_mars_graph(filename):
         
         g = Graph(len(files))
         for line in files :
+            #ex: elements  = ['1,1:', '2,1', '1,2']
             elements = line.strip("\n").split(" ")
-            print(elements)
-            n = Node(elements[0].rstrip(":"))
-            g.add_node(n)
 
+            print(elements)
+            #ex: src = '1,1'
+            src = elements[0].rstrip(":")
+            n = Node(src)
+            print(n.value)
+            g.add_node(n)
+        
+            print("SOURCE: " + src)
             for dest in elements[1:]: 
-                print("edges:")
-                src = str(n)
+                print("EDGES: " + dest)
                 e = Edge(src, dest)
-                print(e.src)
-                
+                g.add_edge(e)
+                        
         #return the graph
         return g
   

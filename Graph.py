@@ -26,10 +26,11 @@ class Graph :
         self.g = {}
 
     def add_node(self, index):
-            self.g[index] = []
+        self.g[index] = []
 
     def add_edge(self, e):
         self.g[e.src].append(e)
+        
 
     def get_edge(self, src, dest):
         if src in self.g :
