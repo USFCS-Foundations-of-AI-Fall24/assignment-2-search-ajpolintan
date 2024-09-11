@@ -44,31 +44,47 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
         closed_list[start_state] = True
 
     # while the priority queue is not full
-    while len(search_queue) > 0 :
+    while search_queue.qsize() > 0 :
         next_state = search_queue.get()
-
+        print("NEXT STATE: " + str(next_state))
+        graph = next_state.mars_graph
         #If the goal is found
         if goal_test(next_state) :
+            print("YOU REACHED THE GOAL!")
             return next_state
         else: 
-            #get all the edges from the src 
-            edges = next_state.mars_graph.getEdges(next_state.location)
+            #get edges must use a node. How do I get the next_states node 
+            currentNode = Node(next_state.location)
+            print(graph.get_edges(next_state.location))
+            
+            edges = next_state.mars_graph.get_edges(next_state.location)
+            #sucessfully got the edges
+            print("---------")
+            print(edges)
+            print("---------")
+
             successors = [] 
             #Check neighbors and add neighbors to sucesssors list. This appends the EDGES
             for e in edges :
                 #create map states for every edge. Check if map state is already present
-                m = map_state(g=1, h=heuristic_fn(e), loc=e.src)
+                m = map_state(g=1, h=0, location=e.dest)
+                m.h = heuristic_fn(m)
+                print(m.h)
 
-                #Added cost
-                #g will always be 1 because you are always move one forward SUCESSORS IS A LIST OF EDGES
                 successors.append(m)
 
-                search_queue.put(1 + heuristic_fn(e), next_state.mars_graph.getNode())
-
+                    
+                #Added cost
+                #g will always be 1 because you are always move one forward SUCESSORS IS A LIST OF EDGES
             if use_closed_list :
-                successors = [item for item in successors if item.location not in closed_list]
+                successors =  [item for item in successors
+                                    if item not in closed_list]
                 for s in successors :
                     closed_list[s] = True
+
+            for m in successors:
+                search_queue.put(m, m.f)
+
 
 
 
@@ -85,7 +101,7 @@ def h1(state) :
 def sld(state) :
    #idea -> get location (1,1)
    #split -> split data point into x and y 
-   loc = state.location.split(",")
+   loc = str(state.location).split(",")
    return sqrt(((int(loc[0]) - 1) ** 2) + ((int(loc[1]) - 1) ** 2))
 
 ## you implement this. Open the file filename, read in each line,
@@ -99,24 +115,27 @@ def read_mars_graph(filename):
             #ex: elements  = ['1,1:', '2,1', '1,2']
             elements = line.strip("\n").split(" ")
 
-            print(elements)
+         #   print(elements)
             #ex: src = '1,1'
             src = elements[0].rstrip(":")
             n = Node(src)
             #Node added sucessfully!
-            g.add_node(n)
+            g.add_node(n.value)
             for dest in elements[1:]: 
-                print("EDGES: " + dest)
+               # print("EDGES: " + dest)
                 #e = ('1,1', '1,2')
-                e = Edge(n, dest)
-
+                e = Edge(src, dest)
                 g.add_edge(e)
                         
         #return the graph
         
         return g
   
+def reachedGoal(s) :
+    return s.location == "1,1"
 
 if __name__ == '__main__':
     x = "1, 2"
+    s1 = map_state(g=1,h=1,location="8,8")
+    result = a_star(s1, sld, reachedGoal)
     read_mars_graph("MarsMap")
