@@ -6,10 +6,9 @@ from collections import deque
 def breadth_first_search(startState, action_list, goal_test, use_closed_list=True) :
     search_queue = deque()
     closed_list = {}
-    states = 1
+    states = 0
 
     search_queue.append((startState,""))
-
     if use_closed_list :
         closed_list[startState] = True
     while len(search_queue) > 0 :
@@ -17,12 +16,13 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
         next_state = search_queue.popleft()
         if goal_test(next_state[0]):
             print("Goal found")
-            print(next_state)
+          #  print(next_state)
             ptr = next_state[0]
+            print("-------")
             while ptr is not None :
                 ptr = ptr.prev
-                print(ptr)
-                
+                #print(ptr)
+
             print("STATES: " + str(states))
             return next_state
         else :

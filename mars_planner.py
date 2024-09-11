@@ -52,7 +52,6 @@ class RoverState :
 
         ##explanation to myself. list of actions are applied. Self is the current state. Each action is applied to the state. If the state is the same the item is removed  
         succ = [(item(self), item.__name__) for item in list_of_actions]
-        print("HEYYY" + str(succ[1]))
 
         ## remove actions that have no effect
 
@@ -64,7 +63,7 @@ class RoverState :
 def move_to_sample(state) :
     r2 = deepcopy(state)
     r2.loc = "sample"
-    r2.prev=state
+    r2.prev = state
     return r2
 def move_to_station(state) :
     r2 = deepcopy(state)
@@ -140,18 +139,31 @@ def mission_complete(state) :
     
 if __name__=="__main__" :
 
-    s = RoverState(loc="battery")
-    s = move_to_sample(s)
-    print(s.loc)
+   
 
     def g(s):
             return s.loc == "battery" and s.sample_extracted == True and s.charged == True
-    s = RoverState()
-    result = breadth_first_search(s, action_list, mission_complete)
-       
+            
+    def moveToSampleTest(s):
+        return s.loc == "sample"
+    def removeSampleTest(s):
+        return s.sample_extracted == True 
+    def returnToChargerTest(s):
+        return s.loc == "battery" and s.charged == True
+
+    s1 = RoverState()
+    #result1 = breadth_first_search(s, action_list, mission_complete)
+    s2 = RoverState()
+    print(s2)
+    result2 = breadth_first_search(s2, action_list, moveToSampleTest)
+    result2 = breadth_first_search(result2[0], action_list, removeSampleTest)
+    result2 = breadth_first_search(result2[0], action_list, returnToChargerTest)
+
+    print(result2)
+    #45 if you do problem decomposition vs 61 if you do not do problem decompositon 
     #result = breadth_first_search(s, action_list, battery_goal)
 
-    print(result)
+  
 
 
 
