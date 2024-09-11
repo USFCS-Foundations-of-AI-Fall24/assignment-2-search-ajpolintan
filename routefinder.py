@@ -51,6 +51,7 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
         #If the goal is found
         if goal_test(next_state) :
             print("YOU REACHED THE GOAL!")
+            print("TOTAL STATES: " + str(states))
             return next_state
         else: 
             #get edges must use a node. How do I get the next_states node 
@@ -63,21 +64,25 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
             print(edges)
             print("---------")
 
+            #GENERATE SUCCESSORS
             successors = [] 
             #Check neighbors and add neighbors to sucesssors list. This appends the EDGES
             for e in edges :
                 #create map states for every edge. Check if map state is already present
                 m = map_state(g=1, h=0, location=e.dest)
+                #UPDATE HEURISTIC
                 m.h = heuristic_fn(m)
-                print(m.h)
-
+                #UPDATE TOTAL ESTIMATED COST
+                m.f = m.g + m.h
                 successors.append(m)
 
-                    
                 #Added cost
                 #g will always be 1 because you are always move one forward SUCESSORS IS A LIST OF EDGES
+            states = states + len(successors)
+            print(states)
             if use_closed_list :
-                successors =  [item for item in successors
+                #filter if there is a similar state
+                successors = [item for item in successors
                                     if item not in closed_list]
                 for s in successors :
                     closed_list[s] = True
@@ -136,6 +141,6 @@ def reachedGoal(s) :
 
 if __name__ == '__main__':
     x = "1, 2"
-    s1 = map_state(g=1,h=1,location="8,8")
+    s1 = map_state(g=1,h=1,location="1,3")
     result = a_star(s1, sld, reachedGoal)
     read_mars_graph("MarsMap")
