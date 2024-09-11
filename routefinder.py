@@ -81,16 +81,17 @@ def read_mars_graph(filename):
             #ex: src = '1,1'
             src = elements[0].rstrip(":")
             n = Node(src)
-            print(n.value)
+            #Node added sucessfully!
             g.add_node(n)
-        
-            print("SOURCE: " + src)
             for dest in elements[1:]: 
                 print("EDGES: " + dest)
-                e = Edge(src, dest)
+                #e = ('1,1', '1,2')
+                e = Edge(n, dest)
+
                 g.add_edge(e)
                         
         #return the graph
+        
         return g
   
 
