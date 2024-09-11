@@ -30,7 +30,6 @@ class Graph :
 
     def add_edge(self, e):
         self.g[e.src].append(e)
-        
 
     def get_edge(self, src, dest):
         if src in self.g :
