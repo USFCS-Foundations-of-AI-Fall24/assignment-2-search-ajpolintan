@@ -14,7 +14,7 @@
 ## Charged can be True or False
 
 from copy import deepcopy
-from search_algorithms import breadth_first_search
+from search_algorithms import breadth_first_search,depth_first_search,depth_limited_search
 
 class RoverState :
     def __init__(self, loc="station", sample_extracted=False, holding_sample=False, holding_tool=False, charged=False):
@@ -81,7 +81,6 @@ def move_to_battery(state) :
 def pick_up_tool(state) :
     r2 = deepcopy(state)
     r2.holding_tool = True
-    r2.loc = "station"
     r2.prev = state
     return r2
 
@@ -93,7 +92,8 @@ def drop_tool(state) :
 
 def use_tool(state) :
     r2 = deepcopy(state)
-    r2.sample_extracted = True
+    if state.holding_tool :
+        r2.sample_extracted = True
     r2.prev = state
     return r2
 
@@ -126,10 +126,17 @@ action_list = [charge, drop_sample, pick_up_sample,
 ## goal functions
 def battery_goal(state) :
     return state.loc == "battery"
-def sample_goal(s) :
+def sample_goal(state) :
     return s.loc == "sample" and s.sample_extracted == True
 def station_goal(state) :
     return state.loc == "station"
+
+def moveToSampleGoal(s):
+    return s.loc == "sample"
+def removeSampleGoal(s):
+    return s.sample_extracted == True 
+def returnToChargerGoal(s):
+    return s.loc == "battery" and s.charged == True
 
 
 ## add your goals here.
@@ -139,27 +146,29 @@ def mission_complete(state) :
     
 if __name__=="__main__" :
 
-   
-
     def g(s):
             return s.loc == "battery" and s.sample_extracted == True and s.charged == True
             
     def moveToSampleTest(s):
         return s.loc == "sample"
     def removeSampleTest(s):
-        return s.sample_extracted == True 
+        return s.sample_extracted == True
     def returnToChargerTest(s):
-        return s.loc == "battery" and s.charged == True
+        return s.loc == "battery" and  s.charged == True
 
     s1 = RoverState()
-    #result1 = breadth_first_search(s, action_list, mission_complete)
+    result1 = breadth_first_search(s1, action_list, mission_complete)
+    result1 = depth_first_search(s1, action_list, mission_complete)
+    result1 = depth_limited_search(s1, action_list, mission_complete,10)
+
+
     s2 = RoverState()
     print(s2)
     result2 = breadth_first_search(s2, action_list, moveToSampleTest)
-    result2 = breadth_first_search(result2[0], action_list, removeSampleTest)
-    result2 = breadth_first_search(result2[0], action_list, returnToChargerTest)
+    result3 = breadth_first_search(result2[0], action_list, removeSampleTest)
+    result4 = breadth_first_search(result3[0], action_list, returnToChargerTest)
 
-    print(result2)
+    #print(result2)
     #45 if you do problem decomposition vs 61 if you do not do problem decompositon 
     #result = breadth_first_search(s, action_list, battery_goal)
 

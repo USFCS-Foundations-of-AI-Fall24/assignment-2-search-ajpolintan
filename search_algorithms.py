@@ -1,7 +1,5 @@
 from collections import deque
 
-
-
 ## We will append tuples (state, "action") in the search queue
 def breadth_first_search(startState, action_list, goal_test, use_closed_list=True) :
     search_queue = deque()
@@ -16,14 +14,17 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
         next_state = search_queue.popleft()
         if goal_test(next_state[0]):
             print("Goal found")
-          #  print(next_state)
+            print(next_state)
             ptr = next_state[0]
-            print("-------")
             while ptr is not None :
+                print("Previous")
                 ptr = ptr.prev
-                #print(ptr)
-
+                print(ptr)
+            print("----------------------")
+            print("Breath First Search")
             print("STATES: " + str(states))
+            print("----------------------")
+
             return next_state
         else :
             successors = next_state[0].successors(action_list)
@@ -41,6 +42,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
     search_queue = deque()
     closed_list = {}
     states = 0
+
     search_queue.append((startState,""))
     if use_closed_list :
         closed_list[startState] = True
@@ -52,11 +54,19 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
             print(next_state)
             ptr = next_state[0]
             while ptr is not None :
+                print("Previous")
                 ptr = ptr.prev
                 print(ptr)
+            print("----------------------")
+            print("Depth First Search")
+            print("STATES: " + str(states))
+            print("----------------------")
+
             return next_state
         else :
             successors = next_state[0].successors(action_list)
+            states = states + len(successors)
+
             if use_closed_list :
                 successors = [item for item in successors
                                     if item[0] not in closed_list]
@@ -83,11 +93,16 @@ def depth_limited_search(startState, action_list, goal_test, limit, use_closed_l
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
+
+            print("----------------------")
+            print("Depth Limited Search")
+            print("STATES: " + str(states))
+            print("----------------------")
+
             return next_state
-        else :
-            if (depth == limit) :
-                continue
+        elif (depth != limit):
             successors = next_state[0].successors(action_list)
+            states = states + len(successors)
             if use_closed_list :
                 successors = [item for item in successors
                                     if item[0] not in closed_list]
@@ -95,4 +110,5 @@ def depth_limited_search(startState, action_list, goal_test, limit, use_closed_l
                     closed_list[s[0]] = True
             depth = depth + 1
             search_queue.extend(successors)
+    print("STATE NOT FOUND IN DEPTH LIMITED SEARCH")
 ## add iterative deepening search here

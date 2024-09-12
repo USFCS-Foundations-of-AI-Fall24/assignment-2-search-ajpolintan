@@ -39,61 +39,61 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     search_queue.put(start_state)
     states = 0
     
-    # add starting state to closed list. CLOSED LIST IS A LIST OF STATES. NEEDS TO BE EDGES OR NODES
+    # Add starting map state to closed list 
     if use_closed_list : 
         closed_list[start_state] = True
 
-    # while the priority queue is not full
+    # Look until search queue is full
     while search_queue.qsize() > 0 :
+        # Get the next state and graph in the queue
         next_state = search_queue.get()
-        print("NEXT STATE: " + str(next_state))
         graph = next_state.mars_graph
+        print("NEXT STATE: " + str(next_state))
+
         #If the goal is found
+        #If the state passes the goal test 
         if goal_test(next_state) :
             print("YOU REACHED THE GOAL!")
             print("TOTAL STATES: " + str(states))
             return next_state
         else: 
-            #get edges must use a node. How do I get the next_states node 
-            currentNode = Node(next_state.location)
-            print(graph.get_edges(next_state.location))
-            
-            edges = next_state.mars_graph.get_edges(next_state.location)
+            #get the edges from the curren mars_graph         
+            edges = graph.get_edges(next_state.location)
+           
             #sucessfully got the edges
             print("---------")
             print(edges)
             print("---------")
 
-            #GENERATE SUCCESSORS
+            #Gain successsors (The edges that are not added yet)
             successors = [] 
-            #Check neighbors and add neighbors to sucesssors list. This appends the EDGES
+            #Loop through edges and add to successors list
             for e in edges :
-                #create map states for every edge. Check if map state is already present
+                #Create a map state for every edge
                 m = map_state(g=1, h=0, location=e.dest)
-                #UPDATE HEURISTIC
+                #Update Heuristic and total cost
                 m.h = heuristic_fn(m)
-                #UPDATE TOTAL ESTIMATED COST
                 m.f = m.g + m.h
+
+                #add the state to successors
                 successors.append(m)
 
-                #Added cost
-                #g will always be 1 because you are always move one forward SUCESSORS IS A LIST OF EDGES
+            #Calculate number of states
             states = states + len(successors)
             print(states)
+
+            #Filter out any states present in the closest list in successors
             if use_closed_list :
                 #filter if there is a similar state
                 successors = [item for item in successors
                                     if item not in closed_list]
+                #Add any remaining successors to closed list
                 for s in successors :
                     closed_list[s] = True
-
+            #Put map states in the queue
             for m in successors:
                 search_queue.put(m, m.f)
 
-
-
-
-    ## you do the rest.
 
 
 
@@ -136,11 +136,13 @@ def read_mars_graph(filename):
         
         return g
   
+# goal functions
 def reachedGoal(s) :
     return s.location == "1,1"
 
 if __name__ == '__main__':
-    x = "1, 2"
-    s1 = map_state(g=1,h=1,location="1,3")
+    s1 = map_state(g=1,h=1,location="8,8")
     result = a_star(s1, sld, reachedGoal)
+    result = a_star(s1, h1, reachedGoal)
+
     read_mars_graph("MarsMap")
