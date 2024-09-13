@@ -92,8 +92,7 @@ def drop_tool(state) :
 
 def use_tool(state) :
     r2 = deepcopy(state)
-    if state.holding_tool :
-        r2.sample_extracted = True
+    r2.sample_extracted = True
     r2.prev = state
     return r2
 
@@ -150,11 +149,13 @@ if __name__=="__main__" :
             return s.loc == "battery" and s.sample_extracted == True and s.charged == True
             
     def moveToSampleTest(s):
-        return s.loc == "sample"
+        return s.loc == "sample" 
     def removeSampleTest(s):
-        return s.sample_extracted == True
+        return s.sample_extracted == True 
     def returnToChargerTest(s):
-        return s.loc == "battery" and  s.charged == True
+        return s.loc == "battery" and s.charged == True
+    
+
 
     s1 = RoverState()
     result1 = breadth_first_search(s1, action_list, mission_complete)

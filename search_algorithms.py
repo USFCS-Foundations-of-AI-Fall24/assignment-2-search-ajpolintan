@@ -42,6 +42,11 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
     search_queue = deque()
     closed_list = {}
     states = 0
+    depth = 0
+
+    #if no limit is provided
+    if limit == 0 :
+        depth = 1
 
     search_queue.append((startState,""))
     if use_closed_list :
@@ -63,7 +68,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
             print("----------------------")
 
             return next_state
-        else :
+        elif (depth != limit):
             successors = next_state[0].successors(action_list)
             states = states + len(successors)
 
@@ -72,6 +77,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
                                     if item[0] not in closed_list]
                 for s in successors :
                     closed_list[s[0]] = True
+            depth = depth + 1
             search_queue.extend(successors)
 
 def depth_limited_search(startState, action_list, goal_test, limit, use_closed_list=True) :
