@@ -42,11 +42,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
     search_queue = deque()
     closed_list = {}
     states = 0
-    depth = 0
 
-    #if no limit is provided
-    if limit == 0 :
-        depth = 1
 
     search_queue.append((startState,""))
     if use_closed_list :
@@ -68,10 +64,20 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
             print("----------------------")
 
             return next_state
-        elif (depth != limit):
+        else :
             successors = next_state[0].successors(action_list)
             states = states + len(successors)
 
+            #increment every thing in s list by 1
+            depth = 0
+            for item in successors :
+                item[0].depth = depth
+                depth = depth + 1
+
+            #filter the items if item.depth is greater than the limit 
+            if (limit != 0) :
+                successors = [item for item in successors if item[0].depth < limit]
+                
             if use_closed_list :
                 successors = [item for item in successors
                                     if item[0] not in closed_list]
@@ -84,7 +90,12 @@ def depth_limited_search(startState, action_list, goal_test, limit, use_closed_l
     search_queue = deque()
     closed_list = {}
     states = 0
-    depth = 0
+
+    #limit variable in the state
+    #increment limit. Do not increment every time you call limit 
+    #Create a variable called depth in the state class
+    #Increase depth member variable to state class by one everytime you increase 
+    #After you called sucessors from depth first search, Only enqueue the things that are less than the limit
 
     search_queue.append((startState,""))
     if use_closed_list :
@@ -106,15 +117,25 @@ def depth_limited_search(startState, action_list, goal_test, limit, use_closed_l
             print("----------------------")
 
             return next_state
-        elif (depth != limit):
+        else :
             successors = next_state[0].successors(action_list)
             states = states + len(successors)
+
+            #increment every thing in s list by 1
+            depth = 0
+            for item in successors :
+                item[0].depth = depth
+                depth = depth + 1
+
+            #filter the items if item.depth is greater than the limit 3. Keep anything that is less than depth 3. aka 0,1,2 
+            successors = [item for item in successors if item[0].depth < limit]
+
             if use_closed_list :
                 successors = [item for item in successors
                                     if item[0] not in closed_list]
                 for s in successors :
                     closed_list[s[0]] = True
-            depth = depth + 1
+
             search_queue.extend(successors)
     print("STATE NOT FOUND IN DEPTH LIMITED SEARCH")
 ## add iterative deepening search here

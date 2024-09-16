@@ -17,14 +17,20 @@ from copy import deepcopy
 from search_algorithms import breadth_first_search,depth_first_search,depth_limited_search
 
 class RoverState :
-    def __init__(self, loc="station", sample_extracted=False, holding_sample=False, holding_tool=False, charged=False):
+    
+
+    
+    def __init__(self, loc="station", sample_extracted=False, holding_sample=False, holding_tool=False, charged=False, depth=0):
         self.loc = loc
         self.sample_extracted=sample_extracted
         self.holding_sample = holding_sample
         self.holding_tool = holding_tool
-        self.charged=charged
+        self.charged = charged
         self.prev = None
-
+        self.depth = 0
+     
+#for item in s.list
+    #item.depth += s.depth + 1
     ## you do this.
     def __eq__(self, other):
        return (self.loc == other.loc and 
@@ -54,8 +60,8 @@ class RoverState :
         succ = [(item(self), item.__name__) for item in list_of_actions]
 
         ## remove actions that have no effect
-
         succ = [item for item in succ if not item[0] == self]
+
         return succ
 
 ## our actions will be functions that return a new state.
