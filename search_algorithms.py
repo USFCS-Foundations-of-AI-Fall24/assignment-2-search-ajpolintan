@@ -121,14 +121,13 @@ def depth_limited_search(startState, action_list, goal_test, limit, use_closed_l
             successors = next_state[0].successors(action_list)
             states = states + len(successors)
 
-            #increment every thing in s list by 1
             depth = 0
             for item in successors :
                 item[0].depth = depth
                 depth = depth + 1
-
-            #filter the items if item.depth is greater than the limit 3. Keep anything that is less than depth 3. aka 0,1,2 
-            successors = [item for item in successors if item[0].depth < limit]
+            
+            if limit != 0 :
+                successors = [item for item in successors if item[0].depth < limit]
 
             if use_closed_list :
                 successors = [item for item in successors

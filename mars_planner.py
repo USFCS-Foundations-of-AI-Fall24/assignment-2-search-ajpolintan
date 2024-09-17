@@ -18,8 +18,6 @@ from search_algorithms import breadth_first_search,depth_first_search,depth_limi
 
 class RoverState :
     
-
-    
     def __init__(self, loc="station", sample_extracted=False, holding_sample=False, holding_tool=False, charged=False, depth=0):
         self.loc = loc
         self.sample_extracted=sample_extracted
@@ -29,8 +27,9 @@ class RoverState :
         self.prev = None
         self.depth = 0
      
-#for item in s.list
-    #item.depth += s.depth + 1
+#slist = s1.successors
+#for item in slist
+    #item.depth += s1.depth + 1
     ## you do this.
     def __eq__(self, other):
        return (self.loc == other.loc and 
@@ -59,6 +58,10 @@ class RoverState :
         ##explanation to myself. list of actions are applied. Self is the current state. Each action is applied to the state. If the state is the same the item is removed  
         succ = [(item(self), item.__name__) for item in list_of_actions]
 
+        depth = 0
+        for item in succ :
+            item[0].depth = depth
+            depth = depth + 1
         ## remove actions that have no effect
         succ = [item for item in succ if not item[0] == self]
 
