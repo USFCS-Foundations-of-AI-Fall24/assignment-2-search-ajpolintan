@@ -16,6 +16,6 @@ if __name__ == '__main__' :
     result3 = breadth_first_search(result2[0], action_list, removeSampleGoal)
     result4 = breadth_first_search(result3[0], action_list, returnToChargerGoal)
 
-    s1 = map_state(g=1,h=1,location="8,8")
+    s1 = map_state(g=1,h=1,location="1,5")
     result = a_star(s1, sld, reachedGoal)
     result = a_star(s1, h1, reachedGoal)

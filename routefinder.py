@@ -48,7 +48,7 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
         # Get the next state and graph in the queue
         next_state = search_queue.get()
         graph = next_state.mars_graph
-        print("NEXT STATE: " + str(next_state))
+       # print("NEXT STATE: " + str(next_state))
 
         #If the goal is found
         #If the state passes the goal test 
@@ -61,17 +61,17 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
             edges = graph.get_edges(next_state.location)
            
             #sucessfully got the edges
-            print("---------")
-            print(edges)
-            print("---------")
+            #print("---------")
+            #print(edges)
+            #print("---------")
 
             #Gain successsors (The edges that are not added yet)
             successors = [] 
             #Loop through edges and add to successors list
             for e in edges :
                 #Create a map state for every edge
-                m = map_state(g=1, h=0, location=e.dest)
-                #Update Heuristic and total cost
+                m = map_state(g=next_state.g + 1, h=0, location=e.dest)
+                #Update Heuristic and total cost and
                 m.h = heuristic_fn(m)
                 m.f = m.g + m.h
 
@@ -80,7 +80,7 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
 
             #Calculate number of states
             states = states + len(successors)
-            print(states)
+            #print(states)
 
             #Filter out any states present in the closest list in successors
             if use_closed_list :
@@ -144,5 +144,17 @@ if __name__ == '__main__':
     s1 = map_state(g=1,h=1,location="8,8")
     result = a_star(s1, sld, reachedGoal)
     result = a_star(s1, h1, reachedGoal)
-
+    print("---------------")
+    s2 = map_state(g=1,h=1,location="4,4")
+    result = a_star(s2, sld, reachedGoal)
+    result = a_star(s2, h1, reachedGoal)
+    print("---------------")
+    s3 = map_state(g=1,h=1,location="3,6")
+    result = a_star(s3, sld, reachedGoal)
+    result = a_star(s3, h1, reachedGoal)
+    print("---------------")
+    s4 = map_state(g=1,h=1,location="1,4")
+    result = a_star(s4, sld, reachedGoal)
+    result = a_star(s4, h1, reachedGoal)
+    print("---------------")
     read_mars_graph("MarsMap")
