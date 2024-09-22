@@ -1,5 +1,7 @@
 from ortools.sat.python import cp_model
 
+## REMEMBER TO PIP INSTALL ORTOOLS
+
 # Instantiate model and solver
 model = cp_model.CpModel()
 solver = cp_model.CpSolver()
@@ -98,3 +100,17 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     print("A9: %s" % frequencies[solver.Value(Antenna9)])
 
 
+"""  
+Results from my pc at home
+Rememember to pip install ortools
+(I cant find the module on my laptop for some reason)
+A1: f2
+A2: f1
+A3: f3
+A4: f3
+A5: f2
+A6: f2
+A7: f1
+A8: f3
+A9: f1
+"""
