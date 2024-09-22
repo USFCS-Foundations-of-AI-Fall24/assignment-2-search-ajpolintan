@@ -135,7 +135,7 @@ action_list = [charge, drop_sample, pick_up_sample,
 def battery_goal(state) :
     return state.loc == "battery"
 def sample_goal(state) :
-    return s.loc == "sample" and s.sample_extracted == True
+    return state.loc == "sample" and state.sample_extracted == True
 def station_goal(state) :
     return state.loc == "station"
 
