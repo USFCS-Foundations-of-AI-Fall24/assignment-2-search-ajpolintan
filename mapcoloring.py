@@ -98,15 +98,3 @@ if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
     print("A9: %s" % frequencies[solver.Value(Antenna9)])
 
 
-
-    print("SF: %s" % colors[solver.Value(SF)])
-    print("Alameda: %s" % colors[solver.Value(Alameda)])
-    print("Marin: %s" % colors[solver.Value(Marin)])
-    print("Contra Costa: %s" % colors[solver.Value(ContraCosta)])
-    print("Solano: %s" % colors[solver.Value(Solano)])
-    print("Sonoma: %s" % colors[solver.Value(Sonoma)])
-    print("Santa Clara: %s" % colors[solver.Value(SantaClara)])
-    print("San Mateo: %s" % colors[solver.Value(SanMateo)])
-    print("Napa: %s" % colors[solver.Value(Napa)])
-
-

@@ -48,7 +48,7 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
         # Get the next state and graph in the queue
         next_state = search_queue.get()
         graph = next_state.mars_graph
-        print("NEXT STATE: " + str(next_state))
+        #print("NEXT STATE: " + str(next_state))
 
         #If the goal is found
         #If the state passes the goal test 
@@ -61,9 +61,9 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
             edges = graph.get_edges(next_state.location)
            
             #sucessfully got the edges
-            print("---------")
-            print(edges)
-            print("---------")
+            #print("---------")
+            #print(edges)
+            #print("---------")
 
             #Gain successsors (The edges that are not added yet)
             successors = [] 

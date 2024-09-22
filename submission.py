@@ -36,4 +36,4 @@ if __name__ == '__main__' :
     result = a_star(s4, h1, reachedGoal)
     print("---------------")
 
-    #Run mapcoloring.py in terminal by using python mapcoloring.py 
+    #Run mapcoloring.py in terminal by using python mapcoloring.py. Also remember to pip install ortools to make it run if module isnt found
