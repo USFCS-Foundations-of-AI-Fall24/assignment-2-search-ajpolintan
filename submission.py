@@ -1,6 +1,8 @@
 from mars_planner import *
 from routefinder import *
 
+#NAME : ALLEN JAKE POLINTAN
+
 if __name__ == '__main__' :
 
     #MARS PLANNER TESTS
