@@ -12,6 +12,7 @@ if __name__ == '__main__' :
     result1 = depth_limited_search(s1, action_list, mission_complete,10)
 
 
+    #PROBLEM DECOMPOSITION
     s2 = RoverState()
     print(s2)
     result2 = breadth_first_search(s2, action_list, moveToSampleGoal)
@@ -37,3 +38,4 @@ if __name__ == '__main__' :
     print("---------------")
 
     #Run mapcoloring.py in terminal by using python mapcoloring.py. Also remember to pip install ortools to make it run if module isnt found
+    #ORTools currently works on my pc at home but doenst work on my laptop. Hopefully it should be able to run for you
